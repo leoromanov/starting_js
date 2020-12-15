@@ -329,3 +329,243 @@ function makeTransaction(pricePerDroid, orderedQuantity, customerCredits) {
       };
       console.log(checkStorage2(100, 50));
       console.log(checkStorage(100, 130));
+
+
+
+      //Задача: проверка пароля
+      function checkPassword1(password) {
+        const ADMIN_PASSWORD = 'jqueryismyjam';
+        let message;
+        // Пиши код ниже этой строки
+      message = password === ADMIN_PASSWORD ? 'Доступ разрешен' : 'Доступ запрещён, неверный пароль!';
+        // Пиши код выше этой строки
+        return message;
+      };
+      console.log(checkPassword1('jqueryismyjam'));
+      console.log(checkPassword('angul4r1sl1f3'));
+
+
+
+      //Инструкция switch
+      function getSubscriptionPrice(type) {
+        let price;
+        // Пиши код ниже этой строки
+      
+       switch (type) { // Дополни эту строку
+          case 'starter': // Дополни эту строку
+            price = 0; // Дополни эту строку
+            break;
+      
+          case 'professional': // Дополни эту строку
+            price = 20; // Дополни эту строку
+            break;
+      
+          case 'organization': // Дополни эту строку
+            price = 50; // Дополни эту строку
+            break;
+        }
+      
+        // Пиши код выше этой строки
+        return price;
+      };
+      console.log(getSubscriptionPrice('professional'));
+      console.log(getSubscriptionPrice('organization'));
+
+
+
+      //Инструкция switch c блоком default
+      function checkPassword2(password) {
+        const ADMIN_PASSWORD = 'jqueryismyjam';
+        let message;
+      
+        switch (password) {
+          case null:
+            message = 'Отменено пользователем!';
+            break;
+
+          case ADMIN_PASSWORD:
+            message = 'Добро пожаловать!';
+            break;
+
+            default:
+              message = 'Доступ запрещён, неверный пароль!';
+        };
+
+        // if (password === null) {
+        //   message = 'Отменено пользователем!';
+        // } else if (password === ADMIN_PASSWORD) {
+        //   message = 'Добро пожаловать!';
+        // } else {
+        //   message = 'Доступ запрещён, неверный пароль!';
+        // }
+      
+        return message;
+      };
+      console.log(checkPassword2('mangohackzor'));
+      console.log(checkPassword(null));
+      console.log(checkPassword('jqueryismyjam'));
+
+
+
+      //Задача: доставка товара
+//       function getShippingCost(country) {
+//         const NO_DELIVERY = 'Извините, в вашу страну доставки нет';
+//         const CHINA = 'Китай';
+// const AUSTRALIA = 'Австралия';
+// const CHILI = 'Чили';
+// const JAMAICA = 'Ямайка';
+//         let message;
+//         let shippingCost = 0;
+//         // Пиши код ниже этой строки
+//       switch(country) {
+//         case CHINA:
+//           shippingCost = 100;
+//           break;
+
+//         case CHILI:
+//           shippingCost = 250;
+//           break;
+
+//         case AUSTRALIA:
+//           shippingCost = 170;
+//           break;
+
+//         case JAMAICA:
+//           shippingCost = 120;
+//           break;
+      
+//           default: 
+//           message = NO_DELIVERY;
+//       };
+//       message = `Доставка в ${country} будет стоить ${shippingCost} кредитов`;
+//         return message;
+//       };
+
+function getShippingCost(country) {
+  let message = "Извините, в вашу страну доставки нет";
+  let price;
+  // Пиши код ниже этой строки
+  switch (country) {
+    case "Австралия":
+      price = 170;
+      message = `Доставка в ${country} будет стоить ${price} кредитов`;
+      break;
+
+    case "Китай":
+      price = 100;
+      message = `Доставка в ${country} будет стоить ${price} кредитов`;
+      break;
+
+    case "Чили":
+      price = 250;
+      message = `Доставка в ${country} будет стоить ${price} кредитов`;
+      break;
+
+    case "Ямайка":
+      price = 120;
+      message = `Доставка в ${country} будет стоить ${price} кредитов`;
+      break;
+      
+  }
+  // Пиши код выше этой строки
+  return message;
+}
+
+console.log(getShippingCost("Чили"));
+      
+      console.log(getShippingCost('Австралия'));//Доставка в Австралия будет стоить 170 кредитов
+      console.log(getShippingCost('Германия'));
+
+
+
+//Длина строки
+function getNameLength(name) {
+  const message = `Длина вашего имени ${name.length} символа(ов)`; // Дополни эту строку
+
+  return message;
+};
+console.log(getNameLength('Poly'));
+
+
+
+//Индексация элементов строки
+const courseTopic = 'JavaSript для начинающих';
+// Пиши код ниже этой строки
+
+const courseTopicLength = courseTopic.length;
+const firstElement = courseTopic[0];
+const lastElement = courseTopic[courseTopic.length - 1];
+
+// courseTopicLength = 24;
+// firstElement = 'J';
+// lastElement = 'x';
+
+console.log(courseTopicLength);//24
+console.log(firstElement);//J
+console.log(lastElement);//x
+// Пиши код выше этой строки
+
+
+
+//Метод slice()
+// Присвой переменной substring выражение создания подстроки длинной length символов 
+// (от начала) из строки string.
+function getSubstring(string, length) {
+  const substring = string.slice(0, length); // Дополни эту строку
+
+  return substring;
+};
+console.log(getSubstring('Привет мир', 3));
+
+
+
+//Форматирование сообщения
+function formatMessage(message, maxLength) {
+  let result;
+// Пиши код ниже этой строки
+if (message.length <= maxLength) {
+  return message;
+} else if (message.length > maxLength) {
+  const cutMessage = message.slice(0, maxLength) + '...';
+  return cutMessage
+};
+// Пиши код выше этой строки
+  return result;
+};
+console.log(formatMessage('Vestibulum facilisis purus nec', 20));
+
+
+
+//Методы toLowerCase() и toUpperCase()
+function normalizeInput(input) {
+  const normalizedInput = input.toLowerCase(); // Дополни эту строку
+  return normalizedInput;
+};
+console.log(normalizeInput('Привет Мир'));
+
+
+
+//Метод includes()
+function checkForName(fullName, name) {
+  const result = fullName.includes(name); // Дополни эту строку
+   return result;
+ };
+ console.log(checkForName('Егор Колбасов', 'Егор'));
+
+
+
+ //Проверка спама
+ function checkForSpam(message) {
+  let result;
+  // Пиши код ниже этой строки
+ const lowCaseMessage = message.toLowerCase();
+ if (lowCaseMessage.includes('spam') || lowCaseMessage.includes('sale')) {
+   return true;
+ } else {
+   return false;
+ };
+  // Пиши код выше этой строки
+  return result;
+};
+console.log(checkForSpam('Get best sale offers now!'));
+console.log(checkForSpam('Latest technology news'));
