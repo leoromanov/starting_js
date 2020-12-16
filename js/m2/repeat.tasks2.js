@@ -119,3 +119,145 @@ function getExtremeElements(array) {
   };
   console.log(splitMessage('Манго спешит на поезд', ' '));
   console.log(splitMessage('Манго', ''));
+
+
+
+//Гравировка украшений
+function calculateEngravingPrice(message, pricePerWord) {
+  // Пиши код ниже этой строки
+let totalPrice = message.split(' ').length * pricePerWord;
+return totalPrice;
+  // Пиши код выше этой строки
+};
+console.log(calculateEngravingPrice('JavaScript у меня в крови', 10));
+
+
+
+//Метод массива join()
+function makeStringFromArray(array, delimeter) {
+  let string;
+  // Пиши код ниже этой строки
+ string = array.join(delimeter);
+  // Пиши код выше этой строки
+  return string;
+};
+console.log(makeStringFromArray(['Манго', 'спешит', 'на', 'поезд'], ' '));
+
+
+
+//Генератор slug
+function slugify(title) {
+  // Пиши код ниже этой строки
+ let slugTitle = title.toLowerCase().replace(/\s+/g, '-');
+ return slugTitle;
+
+ //или return slugTitle.toLowerCase().split(' ').join('-');
+  // Пиши код выше этой строки
+};
+console.log(slugify('Массивы для новичков'));
+
+
+
+//Метод slice()
+const fruits5 = ['яблоко', 'слива', 'груша', 'апельсин', 'банан'];
+// Пиши код ниже этой строки
+const firstTwoEls = fruits5.slice(0, 2);
+const nonExtremeEls = fruits5.slice(1, fruits.length - 1);
+const lastThreeEls = fruits5.slice(-3);
+
+console.log(firstTwoEls);
+console.log(nonExtremeEls);
+console.log(lastThreeEls);
+
+
+
+//Метод concat()
+const oldClients = ['Манго', 'Аякс', 'Поли', 'Киви'];
+const newClients = ['Персик', 'Хьюстон'];
+const anyClients = ['Leo', 'Seva'];
+
+const allClients = oldClients.concat(newClients, anyClients); // Дополни эту строку
+console.log(allClients);//["Манго", "Аякс", "Поли", "Киви", "Персик", "Хьюстон", "Leo", "Seva"]
+
+
+
+//Композиция массивов
+/* Напиши функцию makeArray(firstArray, secondArray, maxLength) для создания нового массива
+ со всеми элементами двух исходных firstArray и secondArray. 
+ Параметр maxLength содержит максимально допустимую длину нового массива.
+
+Если количество элементов нового массива больше maxLength, функция должна вернуть
+ копию массива длиной maxLength элементов.
+
+В противном случае функция должна вернуть новый массив целиком.*/
+function makeArray(firstArray, secondArray, maxLength) {
+  // Пиши код ниже этой строки
+let newArray = [];
+newArray = firstArray.concat(secondArray);
+if (newArray.length > maxLength) {
+  
+  return newArray.slice(0, maxLength);
+} else {
+  return newArray;
+}
+// Пиши код выше этой строки
+};
+console.log(makeArray(['Манго', 'Поли'], ['Аякс', 'Челси'], 3));
+
+
+
+//Цикл for
+/*Функция logNumbersInRange(start, end) логирует все целые числа в диапазоне 
+от start до end включительно. Дополни тело функции так, чтобы она работала правильно.*/
+const start = 3;
+const end = 7;
+
+for (let i = start; i <= end; i += 1) { // Дополни эту строку
+  console.log(i);
+};
+
+
+
+//Сумма чисел (цикл for)
+/*Напиши функцию calculateTotal(number), которая принимает целое число (параметр number) 
+и возвращает сумму всех целых чисел от единицы и до этого числа. 
+Например, если number равно 3, то сумма это 1 + 2 + 3, то есть 6.*/
+function calculateTotal(number) {
+  let summ = 0;
+  for (let i = 0; i <= number; i += 1) {
+    summ += i;
+  };
+  return summ;
+};
+console.log(calculateTotal(3));//6 (т.е. 1+2+3)
+
+
+
+//Итерация по массиву
+/*Дополни код цикла for так, чтобы он последовательно логировал 
+все элементы массива fruits.*/
+const fruits6 = ['яблоко', 'слива', 'груша', 'апельсин'];
+
+for (let i = 0; i <= fruits6.length; i += 1) { // Дополни эту строку
+  const fruit = fruits6[i]; // Дополни эту строку
+  console.log(fruit);
+};
+
+
+
+
+//Подсчёт суммы покупки
+/*Напиши функцию calculateTotalPrice(order), которая принимает один параметр order 
+- массив чисел, и рассчитывает общую сумму его элементов. 
+Общая сумма элементов должна сохраняться в переменной total, 
+которая возвращается, как результат работы функции.*/
+function calculateTotalPrice(order) {
+  let total = 0;
+  // Пиши код ниже этой строки
+  for (let i = 0; i < order.length; i += 1) {
+    total += order[i];
+    }
+  // Пиши код выше этой строки
+  return total;
+};
+console.log(calculateTotalPrice([12, 85, 37, 4]));
