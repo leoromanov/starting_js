@@ -261,3 +261,138 @@ function calculateTotalPrice(order) {
   return total;
 };
 console.log(calculateTotalPrice([12, 85, 37, 4]));
+
+
+
+//Поиск самого длинного слова
+function findLongestWord(string) {
+  // Пиши код ниже этой строки
+    return string.split(' ').reduce((word, bigWord) => (bigWord.length > word.length ? bigWord : word));
+  // Пиши код выше этой строки
+};
+console.log(findLongestWord('The quick brown fox  jumped over the lazy dog'));
+
+
+
+
+//Метод push()
+function createArrayOfNumbers(min, max) {
+  const numbers = [];
+  // Пиши код ниже этой строки
+// numbers[0] = min;
+
+for (let i = min; i <= max; i +=1) {
+numbers.push(i)
+}
+  // Пиши код выше этой строки
+  return numbers;
+};
+console.log(createArrayOfNumbers(2, 4));
+//т.е. тут я как бы говорю, что первый индекс = значению min, 
+//и пока он <= значению max, прибавляй по одному значению.
+
+
+
+
+//Фильтрация массива чисел
+function filterArray(numbers, value) {
+  // Пиши код ниже этой строки
+  const newNumbers = [];
+  for (let i = 0; i < numbers.length; i += 1) {
+    if (numbers[i] > value) {
+      newNumbers.push(numbers[i])
+    }
+    
+  }
+  return newNumbers;
+  // const value1 = [];
+  // for (let i = value; i > value; i += 1) {
+  // value1.push(i)
+  // }
+  // return value1;
+  // Пиши код выше этой строки
+};
+console.log(filterArray([1, 2, 3, 4, 5], 3));
+
+
+
+//Метод includes()
+/* Функция checkFruit(fruit) принимает строку с названием фрукта (параметр fruit), и проверяет есть ли такой фрукт в массиве fruits.
+
+Дополни код функции так, что если:
+
+фрукт есть в массиве, то функция возвращает true;
+фрукта нет в массиве, то функция возвращает false. */
+function checkFruit(fruit) {
+  const fruits = ['яблоко', 'слива', 'груша', 'апельсин'];
+// if (fruits.includes(fruit)) {
+//   return true;
+// }
+//   return false; // Дополни эту строку
+return fruits.includes(fruit);
+};
+console.log(checkFruit('слива'));
+console.log(checkFruit('мандарин'));
+
+
+
+//Общие элементы
+/* Напиши функцию getCommonElements(array1, array2) которая получает два массива
+ произвольной длины в параметры array1 и array2, и возвращает новый массив,
+  состоящий из тех элементов, которые присутствуют в обоих исходных массивах. */
+  function getCommonElements(array1, array2) {
+    // Пиши код ниже этой строки
+  const newArray = [];
+  for (let i = 0; i < array2
+    .length; i += 1) {
+    if (array2.includes(array1[i])) {
+      newArray.push(array1[i])
+    }
+  }
+  return newArray;
+};
+console.log(getCommonElements([1, 2, 3], [2, 3, 4]));//[2, 3]
+console.log(getCommonElements([1, 2, 3], [2, 1, 17, 19]));// [1, 2]
+
+
+
+//Цикл for...of
+/* Выполни рефакторинг кода функции calculateTotalPrice(order) заменив цикл for на for...of. */
+function calculateTotalPrice1(order) {
+  let total = 0;
+  // Пиши код ниже этой строки
+
+let piece;
+for (piece of order) {
+  total += piece;
+}
+  // for (let i = 0; i < order.length; i += 1) {
+  //   total += order[i];
+  // }
+
+  // Пиши код выше этой строки
+  return total;
+};
+console.log(calculateTotalPrice([12, 85, 37, 4]));
+
+
+
+//Фильтрация массива чисел 2.0
+/* Выполни рефакторинг функции filterArray(numbers, value) 
+заменив цикл for на for...of.
+*/
+function filterArray1(numbers, value) {
+  // Пиши код ниже этой строки
+  const filteredNumbers = [];
+
+  for (const number of numbers) {
+
+    if (number > value) {
+      filteredNumbers.push(number);
+    }
+  }
+
+  return filteredNumbers;
+  // Пиши код выше этой строки
+};
+console.log(filterArray1([1, 2, 3, 4, 5], 3));
