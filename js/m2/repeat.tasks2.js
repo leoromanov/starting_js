@@ -53,6 +53,8 @@ function checkAge(age) {
 
 
 
+
+
   //Доступ к элементам по индексу
   // Стартовый код
 const fruits1 = ['яблоко', 'слива', 'груша', 'апельсин'];
@@ -105,6 +107,10 @@ function getExtremeElements(array) {
   };
   console.log(getExtremeElements([1, 2, 3, 4, 5]));
   console.log(getExtremeElements(['яблоко', 'персик', 'груша', 'банан']));
+
+
+
+
 
 
   //Метод строк split()
@@ -396,3 +402,111 @@ function filterArray1(numbers, value) {
   // Пиши код выше этой строки
 };
 console.log(filterArray1([1, 2, 3, 4, 5], 3));
+
+
+
+//Оператор %
+/* Вместо того, чтобы возвращать результат деления, операция по модулю (%) 
+возвращает целочисленный остаток от деления двух чисел - делимого и делителя. */
+// 5 % 1 = 0
+// 5, разделенное на 1, равно 5, а остаток - 0
+
+// 5 % 2 = 1
+//  5, разделенное на 2, равно 2, а остаток - 1
+const a = 3 % 3;//0
+const b = 4 % 3;//1
+const c = 11 % 4;//3
+const d = 12 % 7;//5
+const e = 8 % 3;//2
+
+
+
+//Чётные числа
+/* Задание
+Напиши функцию getEvenNumbers(start, end) которая возвращает массив 
+всех чётных чисел от start до end. Чётным считается число которое 
+делится на 2 без остатка. */
+function getEvenNumbers(start, end) {
+  // Пиши код ниже этой строки
+  const newArray = [];
+  for (let i = start; i <= end; i += 1) {
+    if ( i % 2 === 0 ) {
+      newArray.push(i);
+    }
+    
+  }
+  return newArray;
+  // Пиши код выше этой строки
+};
+console.log(getEvenNumbers(2, 5));
+console.log(getEvenNumbers(3, 11));
+
+
+
+
+//Оператор break
+/* Дополни код так, чтобы в переменную number записывалось первое число
+ от start до end, которое делится на 5 без остатка. */
+const start1 = 6;
+const end1 = 27;
+let number;
+
+for (let i = start1; i <= end1; i += 1) {
+  if (i % 5 === 0) {
+    number = i;
+    break;
+  }
+};
+console.log(number);
+
+
+
+//Оператор break vs return в функции
+/* Выполни рефакторинг функции findNumber(start, end, divisor) так, 
+чтобы она:
+возвращала первое число от start до end, 
+которое делится на divisor без остатка;
+не использовала оператор break;
+не использовала переменную number. */
+function findNumber(start, end, divisor) {
+  // Пиши код ниже этой строки
+  let number;
+
+  for (let i = start; i <= end; i += 1) {
+    
+    if (i % divisor === 0) {
+      number = i;
+      return number;
+    }
+  }
+
+  
+  // Пиши код выше этой строки
+};
+console.log(findNumber(2, 6, 5));//5
+console.log(findNumber(8, 17, 3));//9
+console.log(findNumber(6, 9, 4)); //8
+
+
+
+//Функция includes()
+/* Напиши функцию includes(array, value), которая делает тоже самое, 
+что и метод массива массив.includes(значение) - проверяет, 
+есть ли в массиве array значение value, 
+возвращая true если есть и false в противном случае.
+
+При выполнении этой задачи в теле функции includes() 
+нельзя использовать метод массив.includes(значение).
+*/
+function includes(array, value) {
+  // Пиши код ниже этой строки
+  let result = false;
+  for(let i = 0; i <= array.length; i +=1 ) {
+    if (value === array[i]) { 
+    result = true;
+    }
+  }
+   return result;
+  // Пиши код выше этой строки
+}
+console.log(includes([1, 2, 3, 4, 5], 3));
