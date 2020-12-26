@@ -493,3 +493,449 @@ console.log(countTotalSalary({}));//0
 console.log(countTotalSalary({ mango: 100, poly: 150, alfred: 80 }));//330
 console.log(countTotalSalary({ kiwi: 200, poly: 50, ajax: 150 }));//400
 
+
+
+
+
+//Массив объектов
+/* В стандартный набор повседневных задач разработчика входит 
+манипуляция массивом однотипных объектов. 
+Это значит что все объекты в массиве гарантированно будут иметь 
+одинаковый набор свойств, но с разными значениями.
+const books = [
+  {
+    title: 'Последнее королевство',
+    author: 'Бернард Корнуэлл',
+    rating: 8.38,
+  },
+  {
+    title: 'На берегу спокойных вод',
+    author: 'Роберт Шекли',
+    rating: 8.51,
+  },
+  {
+    title: 'Сон смешного человека',
+    author: 'Федор Достоевский',
+    rating: 7.75,
+  },
+];
+Для перебора такого массива используется стандартный цикл for...of. 
+Значения свойств каждого объекта можно получить используя синтаксис «через точку», 
+так как в каждом объекте набор свойств и их имена будут одинаковые, 
+отличаются только значения.
+for (const book of books) {
+  // Объект книги
+  console.log(book);
+  // Название
+  console.log(book.title);
+  // Автор
+  console.log(book.author);
+  // Рейтинг
+  console.log(book.rating);
+};
+
+Задание
+Перебери массив объектов colors используя цикл for...of. 
+Добавь в массив hexColors значения свойств hex, 
+а в массив rgbColors значения свойств rgb из всех объектов массива colors.
+*/
+const colors = [
+  { hex: '#f44336', rgb: '244,67,54' },
+  { hex: '#2196f3', rgb: '33,150,243' },
+  { hex: '#4caf50', rgb: '76,175,80' },
+  { hex: '#ffeb3b', rgb: '255,235,59' },
+];
+
+const hexColors = [];
+const rgbColors = [];
+// Пиши код ниже этой строки
+for (const color of colors) {
+  hexColors.push(color.hex);
+  rgbColors.push(color.rgb);
+};
+console.log(hexColors);
+console.log(rgbColors);
+
+
+
+
+
+//Задача. Поиск объекта по значению свойства
+/* Напиши функцию getProductPrice(productName) которая принимает один параметр 
+productName - название продукта. 
+Функция ищет объект продукта с таким именем (свойство name) в массиве products 
+и возвращает его цену (свойство price). 
+Если продукт с таким названием не найден, функция должна возвращать null.
+*/
+const products = [
+  { name: 'Радар', price: 1300, quantity: 4 },
+  { name: 'Сканер', price: 2700, quantity: 3 },
+  { name: 'Дроид', price: 400, quantity: 7 },
+  { name: 'Захват', price: 1200, quantity: 9 },
+];
+
+function getProductPrice(productName) {
+  // Пиши код ниже этой строки
+  for (const product of products) {
+    if (productName === product.name) {  
+      // console.log(product.price);
+      return product.price;
+    } 
+    
+  } 
+  return null
+  // Пиши код выше этой строки
+};
+console.log(getProductPrice('Радар'));
+console.log(getProductPrice('Захват'));
+console.log(getProductPrice('Двигатель'));
+
+
+
+
+//Задача. Коллекция значений свойства
+/* Напиши функцию getAllPropValues(propName) которая принимает 
+один параметр propName - имя (ключ) свойства. 
+Функция должна вернуть массив всех значений свойства с таким именем 
+из каждого объекта в массиве products. 
+Если в объектах нет свойства с таким именем, 
+функция должна вернуть пустой массив. */
+const products1 = [
+  { name: 'Радар', price: 1300, quantity: 4 },
+  { name: 'Сканер', price: 2700, quantity: 3 },
+  { name: 'Дроид', price: 400, quantity: 7 },
+  { name: 'Захват', price: 1200, quantity: 9 },
+];
+
+function getAllPropValues(propName) {
+  // Пиши код ниже этой строки
+  let propArray = [];
+  for (const product of products1) {
+    for (const key in product) {
+      if (propName === key) {
+        // const value = Object.values(product);
+        propArray.push(product[key]);
+      }
+    }
+  }
+  return propArray;
+};
+console.log(getAllPropValues('name'));//[ 'Радар', 'Сканер', 'Дроид', 'Захват' ]
+console.log(getAllPropValues('category'));// []
+console.log(getAllPropValues('quantity')); //[ 4, 3, 7, 9 ]
+
+
+
+
+//Задача. Общая стоимость товара
+/* Напиши функцию calculateTotalPrice(productName) которая принимает 
+один параметр productName - название товара. Функция должна вернуть 
+общую стоимость (цена * количество) товара с таким именем из массива products. */
+const products2 = [
+  { name: 'Радар', price: 1300, quantity: 4 },
+  { name: 'Сканер', price: 2700, quantity: 3 },
+  { name: 'Дроид', price: 400, quantity: 7 },
+  { name: 'Захват', price: 1200, quantity: 9 },
+];
+
+function calculateTotalPrice(productName) {
+  // Пиши код ниже этой строки
+let totalPrice = 0;
+for (const product of products2) {
+  if (productName === product.name) {
+    totalPrice = product.price * product.quantity;
+  }
+}
+return totalPrice;
+
+  // Пиши код выше этой строки
+};
+console.log(calculateTotalPrice('Радар'));//5200
+console.log(calculateTotalPrice('Бластер'));//0
+
+
+
+
+//Деструктуризация объектов
+/* 
+const book = {
+  title: 'Последнее королевство',
+  author: 'Бернард Корнуэлл',
+  genres: ['историческая проза', 'приключения'],
+  public: true,
+  rating: 8.38,
+};
+
+const accessType = book.public ? 'публичном' : 'закрытом';
+const message = `Книга ${book.title} автора ${book.author} с рейтингом ${book.rating} находится в ${accessType} доступе.`;
+
+Деструктуризация позволяет «распаковать» значения свойств объекта
+в локальные переменные. Это делает код в месте их использования менее «шумным».
+*/
+// const book = {
+//   title: 'Последнее королевство',
+//   author: 'Бернард Корнуэлл',
+//   genres: ['историческая проза', 'приключения'],
+//   public: true,
+//   rating: 8.38,
+// };
+
+// // Деструктуризируем
+// const { title, author, public, rating, coverImage } = book;
+// console.log(coverImage); // undefined
+
+// const accessType = public ? 'публичном' : 'закрытом';
+// const message = `Книга ${title} автора ${author} с рейтингом ${rating} находится в ${accessType} доступе.`;
+/* Деструктуризация всегда находится в левой части операции присвоения. 
+Переменным внутри фигурных скобок присваиваются значения свойств объекта. 
+Если имя переменной и имя свойства совпадают, то происходит присваивание, 
+в противном случае ей будет присвоено undefined. 
+Порядок объявления переменных в фигурных скобках не важен. */
+
+//Задание
+/* Пришел трёхдневный прогноз максимальных температур и мы считаем среднюю 
+температуру за три дня (meanTemperature). 
+Замени объявления переменных yesterday, today и tomorrow 
+одной операцией деструктуризации свойств объекта highTemperatures.
+*/
+const highTemperatures = {
+  yesterday: 28,
+  today: 26,
+  tomorrow: 33,
+};
+// Пиши код ниже этой строки
+const { yesterday, today, tomorrow } = highTemperatures;
+// const yesterday = highTemperatures.yesterday;
+// const today = highTemperatures.today;
+// const tomorrow = highTemperatures.tomorrow;
+
+// Пиши код выше этой строки
+const meanTemperature = (yesterday + today + tomorrow) / 3;
+console.log(meanTemperature);//29
+console.log(yesterday);//28
+
+
+
+
+//Значения по умолчанию
+/* Задание
+В прогнозе максимальных температур также может быть необязательное свойство icon 
+- иконка погоды. Замени объявления переменных yesterday, today, tomorrow и icon 
+одной операцией деструктуризации свойств объекта highTemperatures. 
+Задай значение по умолчанию для icon - строку 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg'. */
+const highTemperatures1 = {
+  yesterday: 28,
+  today: 26,
+  tomorrow: 33,
+};
+// Пиши код ниже этой строки
+
+/* const {
+  yesterday,
+  today,
+  tomorrow,
+  icon = 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg'
+} = highTemperatures1; */
+// const yesterday = highTemperatures.yesterday;
+// const today = highTemperatures.today;
+// const tomorrow = highTemperatures.tomorrow;
+// const icon = highTemperatures.icon;
+
+// Пиши код выше этой строки
+const meanTemperature1 = (yesterday + today + tomorrow) / 3;
+
+
+
+
+//Изменение имени переменной
+/* const firstBook = {
+  title: 'Последнее королевство',
+  coverImage:
+    'https://images-na.ssl-images-amazon.com/images/I/51b5YG6Y1rL.jpg',
+};
+
+const {
+  title: firstTitle, //создать переменную firstTitle, 
+                     //в которую поместить значение св-ва title из объекта firstBook
+  coverImage: firstCoverImage = 'https://via.placeholder.com/640/480',
+} = firstBook;
+
+console.log(firstTitle); // Последнее королевство
+console.log(firstCoverImage); // https://images-na.ssl-images-amazon.com/images/I/51b5YG6Y1rL.jpg
+
+const secondBook = {
+  title: 'Сон смешного человека',
+};
+
+const {
+  title: secondTitle,
+  coverImage: secondCoverImage = 'https://via.placeholder.com/640/480',
+} = secondBook;
+
+console.log(secondTitle); // Сон смешного человека
+console.log(secondCoverImage); // https://via.placeholder.com/640/480 
+
+
+
+
+Задание
+Замени объявления переменных highYesterday, highToday, highTomorrow и highIcon 
+одной операцией деструктуризации свойств объекта highTemperatures. 
+Задай значение по умолчанию для highIcon - строку 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg'.*/
+const highTemperatures2 = {
+  yesterday: 28,
+  today: 26,
+  tomorrow: 33,
+};
+// Пиши код ниже этой строки
+const {
+  yesterday: highYesterday,
+  tomorrow: highTomorrow,
+  today: highToday,
+  highIcon = 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg'
+} = highTemperatures2;
+// const highYesterday = highTemperatures.yesterday;
+// const highToday = highTemperatures.today;
+// const highTomorrow = highTemperatures.tomorrow;
+// const highIcon = highTemperatures.icon;
+
+// Пиши код выше этой строки
+const meanTemperature2 = (highYesterday + highToday + highTomorrow) / 3;
+
+
+
+
+//Деструктуризация в циклах
+/* for (const book of books) {
+  const { title, author, rating } = book;
+
+  console.log(title);
+  console.log(author);
+  console.log(rating);
+};
+Если в объекте немного свойств, деструктуризацию можно выполнить 
+прямо в месте объявления переменной book.
+for (const { title, author, rating } of books) {
+  console.log(title);
+  console.log(author);
+  console.log(rating);
+};
+*/
+const colors1 = [
+  { hex: '#f44336', rgb: '244,67,54' },
+  { hex: '#2196f3', rgb: '33,150,243' },
+  { hex: '#4caf50', rgb: '76,175,80' },
+  { hex: '#ffeb3b', rgb: '255,235,59' },
+];
+
+const hexColors1 = [];
+const rgbColors1 = [];
+// Пиши код ниже этой строки
+
+for (const { hex, rgb } of colors) {
+  hexColors.push(hex);
+  rgbColors.push(rgb);
+};
+console.log(rgbColors);//['244,67,54', '33,150,243', '76,175,80', '255,235,59']
+
+
+
+
+//Глубокая деструктуризация
+/* 
+const user = {
+  name: 'Jacques Gluke',
+  tag: 'jgluke',
+  stats: {
+    followers: 5603,
+    views: 4827,
+    likes: 1308,
+  },
+};
+
+const {
+  name,
+  tag,
+  stats: { followers, views: userViews, likes: userLikes = 0 },
+} = user;
+
+console.log(name); // Jacques Gluke
+console.log(tag); // jgluke
+console.log(followers); // 5603
+console.log(userViews); // 4827
+console.log(userLikes); // 1308
+*/
+
+
+
+//Задание: выполнить рефакторинг в глубокой дестркуктуризацией
+const forecast = {
+  today: {
+    low: 28,
+    high: 32,
+    icon: 'https://www.flaticon.com/svg/static/icons/svg/861/861059.svg',
+  },
+  tomorrow: {
+    low: 27,
+    high: 31,
+  },
+};
+// Пиши код ниже этой строки
+const {
+  today: { low: lowToday, high: highToday1, icon: todayIcon = 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg'},
+  tomorrow: { low: lowTomorrow, high: highTomorrow1, icon: tomorrowIcon = 'https://www.flaticon.com/svg/static/icons/svg/2204/2204346.svg'},
+} = forecast;
+// const highToday = forecast.today.high;
+// const lowToday = forecast.today.low;
+// const todayIcon = forecast.today.icon;
+
+// const highTomorrow = forecast.tomorrow.high;
+// const lowTomorrow = forecast.tomorrow.low;
+// const tomorrowIcon = forecast.tomorrow.icon;
+
+
+
+
+//Паттерн «Объект настроек»
+/* function doStuffWithBook(title, numberOfPages, downloads, rating, public) {
+  // Делаем что-то с параметрами
+  console.log(title);
+  console.log(numberOfPages);
+  // И так далее
+}
+
+// ❌ Что такое 736? Что такое 10283? Что такое true?
+doStuffWithBook('Последнее королевство', 736, 10283, 8.38, true);
+
+Паттерн «Объект настроек» помогает решить эту проблему, 
+заменяя набор параметров всего одним - объектом с именованными свойствами.
+Ещё один плюс в том, что можно деструктуризировать объект в параметре book.
+
+// Это можно сделать в теле функции.
+function doStuffWithBook(book) {
+  const { title, numberOfPages, downloads, rating, public } = book;
+  console.log(title);
+  console.log(numberOfPages);
+  // И так далее
+}
+
+// Или в сигнатуре (подписи), разницы нет.
+function doStuffWithBook({ title, numberOfPages, downloads, rating, public }) {
+  console.log(title);
+  console.log(numberOfPages);
+  // И так далее
+};
+*/
+function calculateMeanTemperature(forecast) {
+  // const todayLow = forecast.today.low;
+  // const todayHigh = forecast.today.high;
+  // const tomorrowLow = forecast.tomorrow.low;
+  // const tomorrowHigh = forecast.tomorrow.high;
+const {
+  today: { low: todayLow, high: todayHigh },
+  tomorrow: { low: tomorrowLow, high: tomorrowHigh }
+} = forecast;
+  // Пиши код выше этой строки
+  return (todayLow + todayHigh + tomorrowLow + tomorrowHigh) / 4;
+};
+console.log(calculateMeanTemperature({ today: {low: 28, high: 32}, tomorrow: {low: 25, high: 29} }));
