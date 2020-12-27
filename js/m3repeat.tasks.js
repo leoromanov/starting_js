@@ -938,4 +938,511 @@ const {
   // Пиши код выше этой строки
   return (todayLow + todayHigh + tomorrowLow + tomorrowHigh) / 4;
 };
-console.log(calculateMeanTemperature({ today: {low: 28, high: 32}, tomorrow: {low: 25, high: 29} }));
+console.log(calculateMeanTemperature({ 
+  today: {low: 28, high: 32}, 
+  tomorrow: {low: 25, high: 29} }));//28.5
+
+
+
+
+
+  //Операция spread при передаче аргументов
+  /* Можно привести аналогию с ящиком яблок. 
+  Поставив ящик на пол не вынимая из него яблоки, получим аналог массива значений. 
+  Если высыпать яблоки из ящика на пол, 
+  произойдёт распыление - набор отдельных значений.
+
+  Отличие всего одно - в JavaScript распыление не изменяет оригинальную коллекцию, 
+  то есть делается копия каждого элемента. 
+  После распыления останется и ящик полный яблок, и копия каждого яблока на полу.
+  
+const temps = [14, -4, 25, 8, 11];
+
+// В консоли будет массив
+console.log(temps);
+// ❌ Так не сработает, потому что передаём целый массив
+console.log(Math.max(temps)); // NaN
+
+// В консоли будет набор отдельных чисел
+console.log(...temps);
+// ✅ Распылим коллекцию элементов как отдельные аргументы
+console.log(Math.max(...temps)); // 25
+
+То есть запись Math.max(...[14, -4, 25, 8, 11]), 
+после интерпретации превращается в Math.max(14, -4, 25, 8, 11) 
+- синтаксис ... возвращает распакованный массив, 
+то есть распыляет его элементы как отдельные аргументы.
+
+Задание
+В переменной scores хранится массив результатов тестирования. 
+Используя распыление и методы Math.max() и Math.min() дополни код так, 
+чтобы в переменной bestScore был самый высокий балл, а в worstScore самый низкий.
+*/
+const scores = [89, 64, 42, 17, 93, 51, 26];
+// Пиши код ниже этой строки
+const bestScore = Math.max(...scores);
+const worstScore = Math.min(...scores);
+console.log(bestScore);//93
+
+
+
+
+//Операция spread при создании нового массива
+/* Операция spread позволяет создать копию массива или «склеить» 
+произвольное количество массивов в один новый. 
+Раньше для этого использовали методы slice() и concat(), 
+но операция распыления позволяет сделать тоже самое в более краткой форме.
+
+const temps = [14, -4, 25, 8, 11];
+// Это точная, но независимая копия массива temps
+const copyOfTemps = [...temps];
+console.log(copyOfTemps); // [14, -4, 25, 8, 11]
+
+Распыление двух массивов в один новый
+const lastWeekTemps = [14, 25, 11];
+const currentWeekTemps = [23, 17, 18];
+const allTemps = [...lastWeekTemps, ...currentWeekTemps];
+console.log(allTemps); // [14, 25, 11, 23, 17, 18]
+
+Задание
+В переменных firstGroupScores, secondGroupScores и thirdGroupScores 
+хранятся результаты тестирования отдельных групп. 
+Используя распыление дополни код так, чтобы:
+
+В переменной allScores хранился массив всех результатов от первой до третьей группы.
+В переменной bestScore был самый высокий общий балл.
+В переменной worstScore был самый низкий общий балл.
+*/
+const firstGroupScores = [64, 42, 93];
+const secondGroupScores = [89, 14, 51, 26];
+const thirdGroupScores = [29, 47, 18, 97, 81];
+// Пиши код ниже этой строки
+const allScores = [...firstGroupScores, ...secondGroupScores, ...thirdGroupScores];
+const bestScore1 = Math.max(...allScores);
+const worstScore1 = Math.min(...allScores);
+console.log(allScores);
+
+
+
+
+
+//Операция spread при создании нового объекта
+/* Операция spread позволяет распылить свойства произвольного количества объектов 
+в один новый.
+const first = { propA: 5, propB: 10 };
+const second = { propC: 15 };
+const third = { ...first, ...second };
+console.log(third); // { propA: 5, propB: 10, propC: 15 }
+Порядок распыления имеет значение. Имена свойств объекта уникальные, 
+поэтому свойства распыляемого объекта могут перезаписать значение уже 
+существующего свойства, если их имена совпадают.
+
+Во время распыления можно добавлять свойства в произвольное место.
+const first = { propA: 5, propB: 10, propC: 50 };
+const second = { propC: 15 };
+
+const third = { propB: 20, ...first, ...second };
+console.log(third); // { propA: 5, propB: 10, propC: 15 }
+
+const fourth = { ...first, ...second, propB: 20 };
+console.log(fourth); // { propA: 5, propB: 20, propC: 15 }
+
+const fifth = { ...first, propB: 20, ...second };
+console.log(fifth); // { propA: 5, propB: 20, propC: 15 }
+
+Задание
+В конструкторе можно создавать новые тесты, для которых есть настройки по умолчанию
+ которые хранятся в переменной defaultSettings. 
+ Во время создания теста, все или часть настроек можно переопределить, 
+ они хранятся в переменной overrideSettings.
+
+Для того чтобы получить финальные настройки теста, 
+необходимо взять настройки по умолчанию и поверх них применить 
+переопределённые настройки. Дополни код так, 
+чтобы в переменной finalSettings получился объект финальных настроек теста.
+*/
+const defaultSettings = {
+  theme: 'light',
+  public: true,
+  withPassword: false,
+  minNumberOfQuestions: 10,
+  timePerQuestion: 60,
+};
+const overrideSettings = {
+  public: false,
+  withPassword: true,
+  timePerQuestion: 30,
+};
+// Пиши код ниже этой строки
+const finalSettings = { ...defaultSettings, ...overrideSettings };
+console.log(finalSettings.theme);
+
+
+
+
+
+//Задача. Карточки задач
+/* Напиши функцию makeTask(data) которая принимает один параметр data 
+- объект со следующими свойствами.
+
+text - текст задачи.
+category - категория задачи.
+priority - приоритет задачи.
+Функция должна составить и вернуть новый объект задачи, 
+не изменяя напрямую параметр data. В новом объекте должно быть свойство completed, 
+значение которого хранится в одноимённой локальной переменной.
+
+В параметре data гарантированно будет только свойство text, 
+а остальные два, category и priority, могут отсутствовать. 
+Тогда, в новом объекте задачи, в свойствах category и priority должны быть 
+значения по умолчанию, хранящиеся в одноимённых локальных переменных. */
+function makeTask(data) {
+  const completed = false;
+  const category = 'Общее';
+  const priority = 'Обычный';
+  // Пиши код ниже этой строки
+
+const finalData = {
+  category: category,
+  priority: priority,
+  ...data,
+  completed: completed
+};
+return finalData
+  // Пиши код выше этой строки
+};
+console.log(makeTask({}));//{category: "Общее", priority: "Обычный", completed: false}
+console.log(makeTask({ 
+  category: 'Домашнее', 
+  priority: 'Низкий', 
+  text: 'Вынести мусор' }));//{category: "Домашнее", priority: "Низкий", text: "Вынести мусор", completed: false}
+
+
+
+
+  //Операция rest для сбора всех аргументов функции
+/* Вернёмся к аналогии с яблоками. Если на полу лежат яблоки и у нас есть 
+пустой ящик, то операция rest позволит «собрать» яблоки в ящик. 
+При этом оригинальные яблоки останутся на полу, 
+а в ящике будет копия каждого яблока.
+
+Одна из областей применения операции rest это создание функций 
+которые могут принимать произвольное количество аргументов.
+
+// Как объявить параметры функции так,
+// чтобы можно было передать любое кол-во аргументов?
+function multiply() {
+  // ...
+}
+
+multiply(1, 2);
+multiply(1, 2, 3);
+multiply(1, 2, 3, 4);
+
+Если убрать весь «синтаксический шум» и посмотреть на аргументы и параметры функции, 
+то аргументы находятся в правой части операции присваивания, 
+а параметры в левой, потому что значения аргументов присваиваются 
+объявленным параметрам. Значит можно «собрать» все аргументы функции 
+в один параметр используя операцию rest.
+function multiply(...args) {
+  console.log(args); // массив всех аргументов
+}
+
+multiply(1, 2);
+multiply(1, 2, 3);
+multiply(1, 2, 3, 4);
+
+Задание
+Используя операцию rest дополни код функции add() так, 
+чтобы она принимала любое количество аргументов, считала и возвращала их сумму. */
+// Пиши код ниже этой строки
+function add(...args) {
+  // console.log(args);
+  let summ = 0;
+  for (let i = 0; i < args.length; i++) {
+    summ += args[i]
+  }
+  return summ;
+  // Пиши код выше этой строки
+};
+console.log(add(15, 27));
+
+
+
+
+
+//Операция rest для сбора части аргументов функции
+/*
+function multiply(firstNumber, secondNumber, ...otherArgs) {
+  console.log(firstNumber); // Значение первого аргумента
+  console.log(secondNumber); // Значение второго аргумента
+  console.log(otherArgs); // Массив остальных аргументов
+}
+
+multiply(1, 2);
+multiply(1, 2, 3);
+multiply(1, 2, 3, 4); 
+
+
+Задание
+Функция addOverNum() считает сумму всех аргументов. 
+Измени параметры и тело функции addOverNum() так, чтобы она считала сумму 
+только тех аргументов, которые больше чем заданное число. 
+Это число должно быть первым параметром функции.
+*/
+function addOverNum(firstPar, ...args) {
+  let total = 0;
+
+  for (const arg of args) {
+    if (arg > firstPar){
+    total += arg;
+    }
+  }
+
+  return total;
+  // Пиши код выше этой строки
+};
+console.log(addOverNum(50, 15, 27));//0
+console.log(addOverNum(10, 12, 4, 11, 48, 10, 8));//71
+console.log(addOverNum(15, 32, 6, 13, 19, 8));//51
+
+
+
+
+//Задача. Массив совпадений
+// Пиши код ниже этой строки
+function findMatches(array, ...args) {
+  const matches = []; // Не изменяй эту строку
+for (let i = 0; i < args.length; i += 1) {
+  if (array.includes(args[i])) {
+    matches.push(args[i]);
+  }
+}
+  // Пиши код выше этой строки
+  return matches;
+};
+console.log(findMatches([1, 2, 3, 4, 5], 8, 1, 2, 7));//[1, 2]
+console.log(findMatches([63, 11, 8, 29], 4, 7, 16));
+console.log(findMatches([4, 89, 17, 36, 2], 8, 17, 89, 27, 2));
+
+
+
+
+//Методы объекта
+const bookShelf = {
+  // Пиши код ниже этой строки
+  books: ['Последнее королевство', 'Страж снов'],
+  getBooks() {
+    return 'Возвращаем все книги';
+  },
+  addBook(bookName) {
+    return `Добавляем книгу ${bookName}`;
+  },
+  removeBook(bookName) {
+    return `Удаляем книгу ${bookName}`
+  },
+  updateBook (oldName, newName) {
+    return `Обновляем книгу ${oldName} на ${newName}`
+  }
+  // Пиши код выше этой строки
+};
+console.log(bookShelf.addBook('Мгла'));
+console.log(bookShelf.addBook('Преступление и наказание'));
+console.log(bookShelf.books);//["Последнее королевство", "Страж снов"]
+
+
+
+
+//Доступ к свойствам объекта в его методах
+/* Для того, чтобы получить доступ к свойствам объекта в методах, 
+мы обращаемся к нему через this и дальше как обычно - «через точку» к свойствам.
+
+const bookShelf = {
+  books: ['Последнее королевство'],
+  getBooks() {
+    return this.books;
+  },
+  addBook(bookName) {
+    this.books.push(bookName);
+  },
+  removeBook(bookName) {
+    const bookIndex = this.books.indexOf(bookName);
+    this.books.splice(bookIndex, 1);
+  },
+};
+
+console.log(bookShelf.getBooks()); // []
+bookShelf.addBook('Мгла');
+bookShelf.addBook('Страж снов');
+console.log(bookShelf.getBooks()); // ['Последнее королевство', 'Мгла', 'Страж снов']
+bookShelf.removeBook('Мгла');
+console.log(bookShelf.getBooks()); // ['Последнее королевство', 'Страж снов']
+*/
+
+const bookShelf1 = {
+  books: ['Последнее королевство', 'Мгла', 'Страж снов'],
+  updateBook(oldName, newName) {
+    // Пиши код ниже этой строки
+    const bookIndex = this.books.indexOf(oldName);
+    this.books.splice(bookIndex, 1, newName);
+    // Пиши код выше этой строки
+  },
+};
+bookShelf1.updateBook('Мгла', 'Хроники подземелий');
+console.log(bookShelf1.books);//["Последнее королевство", "Хроники подземелий", "Страж снов"]
+
+
+
+
+
+//Задача. Лавка зелий «У старой жабы»
+/* Задание
+К нам обратилась владелица лавки зелий «У старой жабы» и заказала программу 
+для ведения инвентаря - добавления, удаления, поиска и обновления зелий. 
+Добавь объекту atTheOldToad свойство potions, 
+значением которого сделай пустой массив. */
+const atTheOldToad = {
+  // Пиши код ниже этой строки
+  potions: []
+  // Пиши код выше этой строки
+};
+
+
+
+
+//Задача. Получаем все зелья
+//Добавь объекту atTheOldToad метод getPotions(), 
+//который просто возвращает значение свойства potions.
+const atTheOldToad1 = {
+  // Пиши код ниже этой строки
+  potions: ['Зелье скорости', 'Дыхание дракона', 'Каменная кожа'],
+  getPotions() {
+    return this.potions
+  }
+  // Пиши код выше этой строки
+};
+console.log(atTheOldToad1.getPotions);//ƒ getPotions() {return this.potions}
+console.log(atTheOldToad1.getPotions());//["Зелье скорости", "Дыхание дракона", "Каменная кожа"]
+
+
+
+
+//Задача. Добавляем новое зелье
+//Дополни метод addPotion(potionName) так, чтобы он добавлял зелье potionName 
+//в конец массива зелий в свойстве potions.
+const atTheOldToad2 = {
+  potions: ['Зелье скорости', 'Дыхание дракона', 'Каменная кожа'],
+  addPotion(potionName) {
+    // Пиши код ниже этой строки
+    return this.potions.push(potionName)
+    // Пиши код выше этой строки
+  },
+};
+atTheOldToad2.addPotion('Невидимка');
+console.log(atTheOldToad2.potions);
+
+
+
+
+//Задача. Удаляем зелье
+//Дополни метод removePotion(potionName) так, чтобы он удалял зелье potionName 
+//из массива зелий в свойстве potions.
+const atTheOldToad3 = {
+  potions: ['Зелье скорости', 'Дыхание дракона', 'Каменная кожа'],
+  removePotion(potionName) {
+    // Пиши код ниже этой строки
+    const potionIndex = this.potions.indexOf(potionName);
+    this.potions.splice(potionIndex, 1)
+    // Пиши код выше этой строки
+  },
+};
+console.log(atTheOldToad3.removePotion('Дыхание дракона'));
+console.log(atTheOldToad3.potions);//["Зелье скорости", "Каменная кожа"]
+
+
+
+
+//Задача. Обновляем зелье
+//Дополни метод updatePotionName(oldName, newName) так, чтобы он 
+//обновлял название зелья с oldName на newName, 
+//в массиве зелий в свойстве potions.
+const atTheOldToad4 = {
+  potions: ['Зелье скорости', 'Дыхание дракона', 'Каменная кожа'],
+  updatePotionName(oldName, newName) {
+    // Пиши код ниже этой строки
+    const potionIndex = this.potions.indexOf(oldName);
+    this.potions.splice(potionIndex, 1, newName);
+    // Пиши код выше этой строки
+  },
+};
+console.log(atTheOldToad4.updatePotionName('Дыхание дракона', 'Полиморф'));
+console.log(atTheOldToad4.potions);//["Зелье скорости", "Полиморф", "Каменная кожа"]
+
+
+
+
+//Задача. Расширяем инвентарь
+/* Заказчица хочет чтобы каждое зелье было представлено не только именем, 
+но и ценой, а в будущем может быть и другими характеристиками. 
+Поэтому теперь в свойстве potions будет храниться массив объектов 
+со следующими свойствами.
+{
+  name: 'Дыхание дракона',
+  price: 700
+}
+Выполни рефакторинг методов объекта atTheOldToad так, 
+чтобы они работали не с массивом строк, а с массивом объектов.
+
+getPotions() - метод для получения всех зелий. 
+Возвращает значение свойства potions.
+
+addPotion(newPotion) - добавляет зелье newPotion (уже объект) 
+в массив в свойстве potions.
+
+removePotion(potionName) - удаляет объект зелья с именем potionName 
+из массива в свойстве potions.
+
+updatePotionName(oldName, newName) - обновляет свойство name объекта-зелья 
+с названием oldName на newName в массиве potions.
+*/
+const atTheOldToad5 = {
+  potions: [
+    { name: 'Зелье скорости', price: 460 },
+    { name: 'Дыхание дракона', price: 780 },
+    { name: 'Каменная кожа', price: 520 },
+  ],
+  // Пиши код ниже этой строки
+  getPotions() {
+    return this.potions;
+  },
+  addPotion(newPotion) {
+    if (this.potions.includes(newPotion)) {
+      return `Зелье ${potionName} уже есть в инвентаре!`;
+    } else {
+      this.potions.push(newPotion);
+    }  
+  },
+  removePotion(potionName) {
+       for (const potion of this.potions) {
+           if (potion.name === potionName) {
+               const potionIndex = this.potions.indexOf(potion);
+               console.log(potionIndex)
+               this.potions.splice(potionIndex, 1);
+               return;
+           }   
+       }
+        return `Зелья ${ potionName } нет в инвентаре!`;
+  },
+updatePotionName(oldName, newName) {
+  for (const potion of this.potions) {
+      if (potion.name === oldName) {
+          potion.name = newName;
+           return;
+       } 
+  }
+  return `Зелья ${oldName} нет в инвентаре!`;
+},
+  // Пиши код выше этой строки
+};
+console.log(atTheOldToad5.getPotions());
+atTheOldToad5.updatePotionName('Каменная кожа', 'Зелье неуязвимости');
