@@ -218,21 +218,28 @@ processCall('Поли', takeCall, leaveHoloMessage);
 const pizzaPalace = {
     pizzas: ['Ультрасыр', 'Аль Копчино', 'Четыре нарезона'],
     order(pizzaName, onSuccess, onError) {
-        for (let i = 0; i < this.pizzas.length; i + 1) {
-            if (pizzaName !== this.pizzas[i]) {
-                const error = `В ассортименте нет пиццы с названием ${pizzaName}.`
-                return onError(error);
-            }
+        if (this.pizzas.includes(pizzaName)) {
+            // return onSuccess(pizzaName);
         }
-        return onSuccess(pizzaName);
+        const error = `В ассортименте нет пиццы с названием ${pizzaName}.`
+        // return onError(error);
+    //     for (let i = 0; i < this.pizzas.length; i + 1) {
+    //         if (pizzaName !== this.pizzas[i]) {
+    //             const error = `В ассортименте нет пиццы с названием ${pizzaName}.`
+    //             return onError(error);
+    //         }
+    //     }
+    //     return onSuccess(pizzaName);
     },
   };
   function onError() {
-      console.log(`В ассортименте нет пиццы с названием ${pizzaName}.`);
+      return console.log(error);
+      
   };
   function onSuccess() {
-      console.log(pizzaName);
+      return console.log(pizzaName);
   };
+  
   // Пиши код выше этой строки
   
   // Колбэк для onSuccess
@@ -251,5 +258,145 @@ const pizzaPalace = {
   pizzaPalace.order('Биг майк', makePizza2, onOrderError);
   pizzaPalace.order('Венская', makePizza2, onOrderError);
   
-  console.log(pizzaPalace.order('Аль Копчино', makePizza, onOrderError));
-  console.log(pizzaPalace.order('Четыре нарезона', makePizza, onOrderError));
+//   console.log(pizzaPalace.order('Аль Копчино', makePizza2, onOrderError));
+//   console.log(pizzaPalace.order('Четыре нарезона', makePizza2, onOrderError));
+//   console.log(pizzaPalace.order('Биг майк', makePizza2, onOrderError));
+
+
+
+
+  //Контекст вызова функции
+  /*
+  const bookShelf = {
+  authors: ['Бернард Корнуэлл', 'Роберт Шекли'],
+  getAuthors() {
+    return this.authors;
+  },
+  addAuthor(authorName) {
+    this.authors.push(authorName);
+  },
+};
+
+console.log(bookShelf.getAuthors()); // ['Бернард Корнуэлл', 'Роберт Шекли']
+bookShelf.addAuthor('Ли Танит');
+console.log(bookShelf.getAuthors()); // ['Бернард Корнуэлл', 'Роберт Шекли', 'Ли Танит']
+*/
+const pizzaPalace1 = {
+    pizzas: ['Ультрасыр', 'Аль Копчино', 'Четыре нарезона'],
+    // Пиши код ниже этой строки
+    checkPizza(pizzaName) {
+        return this.pizzas.includes(pizzaName);
+      },
+      order(pizzaName) {
+        const isPizzaAvailable = this.checkPizza(pizzaName);
+    
+        if (!isPizzaAvailable) {
+          return `В ассортименте нет пиццы с названием «${pizzaName}».`;
+        }
+    
+        return `Заказ принят, готовим пиццу «${pizzaName}».`;
+      },
+    // Пиши код выше этой строки
+  };
+  console.log(pizzaPalace1.order('Аль Копчино'));
+  console.log(pizzaPalace1.order('Венская'));
+  
+
+
+
+
+  //Задача. Аккаунт пользователя
+  /* Задание
+Перед увольнением разработчик сломал исходный код управления аккаунтами 
+пользователей нашего сервиса доставки еды. Выполни рефакторинг методов объекта 
+customer, расставив отсутствующие this при обращении к свойствам объекта. */
+const customer = {
+    username: 'Mango',
+    balance: 24000,
+    discount: 0.1,
+    orders: ['Burger', 'Pizza', 'Salad'],
+    // Пиши код ниже этой строки
+    getBalance() {
+      return this.balance;
+    },
+    getDiscount() {
+      return this.discount;
+    },
+    setDiscount(value) {
+      this.discount = value;
+    },
+    getOrders() {
+      return this.orders;
+    },
+    addOrder(cost, order) {
+      this.balance -= cost - cost * this.discount;
+      this.orders.push(order);
+    },
+    // Пиши код выше этой строки
+  };
+  
+  customer.setDiscount(0.15);
+  console.log(customer.getDiscount()); // 0.15
+  customer.addOrder(5000, 'Steak');
+  console.log(customer.getBalance()); // 19750
+  console.log(customer.getOrders()); // ['Burger', 'Pizza', 'Salad', 'Steak']
+  
+
+
+
+
+  //Метод call
+  /* Бывают ситуации когда функцию нужно вызвать в контексте какого-то объекта, 
+  при этом функция не является его методом. 
+  Для этого у функций есть методы call и apply.
+
+  foo.call(obj, arg1, arg2, ...)
+
+  Метод call вызовет функцию foo так, что в this будет ссылка на объект obj, 
+  а также передаст аргументы arg1, arg2 и т. д.
+  
+  function greetGuest(greeting) {
+  console.log(`${greeting}, ${this.username}.`);
+}
+
+const mango = { username: 'Манго' };
+const poly = { username: 'Поли' };
+
+greetGuest.call(mango, 'Добро пожаловать');
+// Добро пожаловать, Манго.
+
+greetGuest.call(poly, 'С приездом');
+// С приездом, Поли. */
+
+/* Сервису приготовления и доставки еды требуется функция генерации сообщений 
+о статусе заказа.
+
+Дополни функцию composeMessage(position) так, 
+чтобы она возвращала строку в формате 'Готовим <блюдо> для <почта>. 
+Ваш заказ <позиция>-й в очереди.' Позиция это значение параметра position 
+- позиция элемента в массиве (на единицу больше чем индекс).
+
+Не объявляй дополнительные параметры функции composeMessage(position).
+
+Используй call для вызова функции в контексте одного объекта-заказа.
+
+Используй this в теле функции для доступа к свойствам объекта-заказа 
+в контексте которого она была вызывана.
+
+Дополни код так, чтобы в переменной messages, с помощью метода map, 
+получился массив сообщений о статусе заказов из массива orders.
+*/
+const orders = [
+    { email: 'solomon@topmail.ua', dish: 'Burger' },
+    { email: 'artemis@coldmail.net', dish: 'Pizza' },
+    { email: 'jacob@mail.com', dish: 'Taco' },
+  ];
+  
+  // Пиши код ниже этой строки
+  function composeMessage(position) {
+      console.log(`Готовим ${this.dish} для ${this.email}. Ваш заказ ${this.position}-й в очереди.`);
+      
+  };
+
+  
+  const messages = [];
