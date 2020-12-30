@@ -713,4 +713,159 @@ class Car7 {
 
 
 
-  //
+  //Статические свойства
+  /* Кроме публичных и приватных свойств будущего экземпляра, 
+  в классе можно объявить его собственные свойства, доступные только классу, 
+  но не его экземплярам - статические свойства (static). 
+  Они полезны для хранения информации относящейся к самому классу.
+
+  Добавим классу пользователя приватное свойство type - его тип, 
+  определяющий набор прав, например администратор, редактор, 
+  просто пользователь и т п. Возможные типы пользователей будем хранить 
+  как статическое свойство TYPES - объект со свойствами.
+
+  class User {
+  // Объявление и инициализация статического свойства
+  static TYPES = {
+    ADMIN: 'admin',
+    EDITOR: 'editor',
+  };
+  #email;
+  #type;
+
+  constructor({ email, type }) {
+    this.#email = email;
+    this.#type = type;
+  }
+
+  get type() {
+    return this.#type;
+  }
+
+  set type(newType) {
+    if (User.TYPES[newType] === undefined) {
+      console.log('Ошибка! Такого типа пользователя не существет');
+      return;
+    }
+
+    this.#type = newType;
+  }
+}
+
+const mango = new User({
+  email: 'mango@mail.com',
+  type: User.TYPES.ADMIN,
+});
+
+console.log(mango.TYPES); // undefined
+console.log(User.TYPES); // { ADMIN: 'admin', EDITOR: 'editor' }
+
+console.log(mango.type); // admin
+mango.type = User.TYPES.EDITOR;
+console.log(mango.type); // editor
+
+Статические свойства также могут быть приватные, то есть доступные только 
+внутри класса. Для этого имя свойства должно начинаться с символа #, 
+также как приватные свойства. Обращение к приватному статическому свойству 
+вне тела класса вызовет ошибку.
+
+Задание
+Выполни рефакторинг класса Car. Добавь публичное статическое свойство MAX_PRICE
+ со значением 50000 - максимально допустимая цена автомобиля.
+
+Добавь сеттеру price проверку передаваемого значения параметра newPrice. 
+Если оно больше чем MAX_PRICE, сеттер ничего не делает, 
+а если меньше или равно, то перезаписывает цену автомобиля. */
+
+class Car8 {
+    // Пиши код ниже этой строки
+    static MAX_PRICE = 50000;
+    #price;
+  
+    constructor({ price }) {
+      this.#price = price;
+    }
+  
+    get price() {
+      return this.#price;
+    }
+  
+    set price(newPrice) {
+        if (newPrice <= Car8.MAX_PRICE) {
+      this.#price = newPrice;
+      return newPrice;
+        }
+        return;
+    } 
+    // Пиши код выше этой строки
+  }
+  
+  const audi = new Car8({price: 35000});
+  console.log(audi.price); // 35000
+  
+  audi.price = 49000;
+  console.log(audi.price); // 49000
+  
+  audi.price = 51000;
+  console.log(audi.price); // 49000
+
+
+
+
+
+  //Статические методы
+  /* В классе можно объявить не только методы будущего экземпляра, 
+  но и методы доступные только классу - статические методы, 
+  которые могут быть как публичные, так и приватные. Синтаксис объявления 
+  аналогичен статическим свойствам, за исключением того, 
+  что значением будет метод.
+  class User {
+  static #takenEmails = [];
+
+  static isEmailTaken(email) {
+    return User.#takenEmails.includes(email);
+  }
+
+  #email;
+
+  constructor({ email }) {
+    this.#email = email;
+    User.#takenEmails.push(email);
+  }
+}
+
+const mango = new User({ email: 'mango@mail.com' });
+
+console.log(
+  User.isEmailTaken('poly@mail.com')
+); // false
+
+console.log(
+  User.isEmailTaken('mango@mail.com')
+); // true
+
+Задание
+Добавь классу Car публичный статический метод checkPrice(price), 
+принимающий цену автомобиля. Метод должен сравнить значения параметра price 
+и приватного статического свойства MAX_PRICE.*/
+class Car9 {
+    static #MAX_PRICE = 50000;
+    // Пиши код ниже этой строки
+  static checkPrice(price) {
+      if (price <= this.#MAX_PRICE) {
+          return 'Всё хорошо, цена в порядке.';
+      }
+      return 'Внимание! Цена превышает допустимую.';
+  }
+    // Пиши код выше этой строки
+    constructor({ price }) {
+      this.price = price;
+    }
+  }
+  
+  const audi1 = new Car9({ price: 36000 });
+  const bmw1 = new Car9({ price: 64000 });
+  
+  console.log(Car9.checkPrice(audi.price)); // Всё хорошо, цена в порядке.
+  console.log(Car9.checkPrice(bmw.price)); // Внимание! Цена превышает допустимую.
+  
