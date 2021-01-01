@@ -393,10 +393,177 @@ const orders = [
   ];
   
   // Пиши код ниже этой строки
-  function composeMessage(position) {
-      console.log(`Готовим ${this.dish} для ${this.email}. Ваш заказ ${this.position}-й в очереди.`);
-      
-  };
+  function composeMessage(position) { 
+    return `Готовим ${this.dish} для ${this.email}. Ваш заказ ${position}-й в очереди.`;
+  }
+  const messages = orders.map((order, index) => composeMessage.call(order, index + 1));
 
   
-  const messages = [];
+
+
+  //Метод apply
+  /* Метод apply это аналог метода call за исключением того, 
+  что синтаксис передачи аргументов требует не перечисление, а массив, 
+  даже если аргумент всего один.
+  foo.call(obj, arg1, arg2, ...)
+
+foo.apply(obj, [arg1, arg2, ...])
+
+Метод apply вызовет функцию foo так, что в this будет ссылка на объект obj, 
+а также передаст элементы массива как отдельные аргументы arg1, arg2 и т. д. 
+На практике, в основном используется метод call.
+function greetGuest(greeting) {
+  console.log(`${greeting}, ${this.username}.`);
+}
+
+const mango = { username: 'Манго' };
+const poly = { username: 'Поли' };
+
+greetGuest.apply(mango, ['Добро пожаловать']); // Добро пожаловать, Манго.
+greetGuest.apply(poly, ['С приездом']); // С приездом, Поли.
+
+Задание
+Выполни рефакторинг кода так, чтобы функция composeMessage(position) 
+вызывалась методом apply.*/
+const orders3 = [
+  { email: 'solomon@topmail.ua', dish: 'Burger' },
+  { email: 'artemis@coldmail.net', dish: 'Pizza' },
+  { email: 'jacob@mail.com', dish: 'Taco' },
+];
+
+// Пиши код ниже этой строки
+function composeMessage1(position) {
+  return `Готовим ${this.dish} для ${this.email}. Ваш заказ ${position}-й в очереди.`;
+}
+
+const messages1 = orders3.map((order, index) =>
+  composeMessage1.apply(order, [index + 1])
+);
+
+
+
+
+
+//Метод bind
+/* Методы call и apply вызывают функцию «на месте», то есть сразу. 
+Но в случае колбэк-функций, когда необходимо не сразу вызвать функцию, 
+а передать ссылку на неё, причём с привязанным контекстом, используется метод bind.
+
+foo.bind(obj, arg1, arg2, ...)
+
+Метод bind создаёт и возвращает копию функции foo с привязанным контекстом obj 
+и аргументами arg1, arg2 и т. д. Получается копия функции которую можно 
+передать куда угодно и вызвать когда угодно.
+
+function greet(clientName) {
+  return `${clientName}, добро пожаловать в «${this.service}».`;
+}
+
+const steam = { service: 'Steam' };
+const steamGreeter = greet.bind(steam);
+steamGreeter('Манго'); // "Манго, добро пожаловать в «Steam»."
+
+const gmail = { service: 'Gmail' };
+const gmailGreeter = greet.bind(gmail);
+gmailGreeter('Поли'); // "Поли, добро пожаловать в «Gmail»."
+
+Задание
+Функция composeMessage(customerName) создаёт приветственные сообщения 
+для ресторанов. Дополни код так, чтобы в переменных pizzaPalaceComposer 
+и burgerShackComposer были её копии с привязанным контекстом 
+к соответствующим объектам.*/
+const pizzaPalace2 = {
+  company: 'Pizza Palace',
+};
+
+const burgerShack = {
+  company: 'Burger Shack',
+};
+
+function composeMessage2(customerName) {
+  return `${customerName}, всегда рады вас видеть в «${this.company}».`;
+}
+// Пиши код ниже этой строки
+
+const pizzaPalaceComposer = composeMessage2.bind(pizzaPalace2);
+const pizzaPalaceMessage = pizzaPalaceComposer('Манго');
+
+const burgerShackComposer = composeMessage2.bind(burgerShack);
+const burgerShackMessage = burgerShackComposer('Поли');
+
+console.log(pizzaPalaceMessage);
+
+
+
+
+
+//Метод bind и методы объекта
+/* При передаче методов объекта как колбэк-функций, контекст не сохраняется. 
+Колбэк это ссылка на метод, которая присваивается как значение параметра, 
+вызываемого без объекта.
+const customer = {
+  firstName: 'Jacob',
+  lastName: 'Mercer',
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+};
+
+function makeMessage(callback) {
+  // callback() это вызов метода getFullName без объекта
+  console.log(`Обрабатываем заявку от ${callback()}.`);
+}
+
+makeMessage(customer.getFullName); // Будет ошибка при вызове функции
+
+В строгом режиме, значение this в методе getFullName, 
+при вызове как колбэк-функции callback(), будет undefined. 
+При обращении к свойствам firstName и lastName будет ошибка, 
+так как undefined это не объект.
+
+Метод bind используется для привязки контекста при передаче методов объекта 
+как колбэк-функций. Передадим колбэком не оригинальный метод getFullName, 
+а его копию с призанным контекстом к объекту customer.
+
+// ❌ Было
+makeMessage(customer.getFullName); // Будет ошибка при вызове функции
+
+// ✅ Стало
+makeMessage(customer.getFullName.bind(customer)); // Обрабатываем заявку от Jacob Mercer.
+
+Задание
+Сервису рассылки электронной почты необходимо добавить логирование действий 
+для сбора статистики. Функция logAndInvokeAction(email, action) ожидает почту 
+и действие которое нужно выполнить - ссылку на метод объекта service. 
+Сбор статистики симулиуется логированием строки. 
+Разберись и дополни код так, чтобы он работал верно.*/
+const service = {
+  mailingList: ['mango@mail.com', 'poly@hotmail.de', 'ajax@jmail.net'],
+  subscribe(email) {
+    this.mailingList.push(email);
+    return `Почта ${email} добавлена в рассылку.`;
+  },
+  unsubscribe(email) {
+    this.mailingList = this.mailingList.filter((e) => e !== email);
+    return `Почта ${email} удалена из рассылки.`;
+  },
+};
+
+function logAndInvokeAction(email, action) {
+  console.log(`Выполняем действие с ${email}.`);
+  return action(email);
+}
+
+console.log(logAndInvokeAction('kiwi@mail.uk', service.subscribe.bind(service)));
+// Почта kiwi@mail.uk добавлена в рассылку.
+
+console.log(service.mailingList);
+/* ['mango@mail.com', 
+    'poly@hotmail.de', 
+    'ajax@jmail.net', 
+    'kiwi@mail.uk']*/
+
+console.log(logAndInvokeAction('poly@hotmail.de', service.unsubscribe.bind(service)));
+// Почта poly@hotmail.de удалена из рассылки.
+
+console.log(service.mailingList); // ['mango@mail.com', 'ajax@jmail.net', 'kiwi@mail.uk']
