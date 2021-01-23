@@ -1,0 +1,12 @@
+{
+  "name": "m9",
+  "version": "1.0.0",
+  "main": "m9examples.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Leo <elgenadich@gmail.com>",
+  "license": "ISC",
+  "description": ""
+}
